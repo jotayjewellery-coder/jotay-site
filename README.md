@@ -55,6 +55,6 @@ Test first in **Test mode** (toggle top right) with card `4242 4242 4242 4242`, 
 - The Waterproof? page says **every style is tested by us** in the shower, pool and salt water. Do that test before launch, or change the wording.
 - About page: Jodie should read it and make it her own words. her daughter is never named, only "my daughter".
 - Replace `INSTAGRAM_URL` in `tools/build_pages.py` and run `python3 tools/build_pages.py`.
-- Set up `hello@jotay.com.au`, or change it in `tools/build_pages.py` (and the fallback message in `js/app.js`).
+- Set up `jotayjewellery@gmail.com`, or change it in `tools/build_pages.py` (and the fallback message in `js/app.js`).
 - Earrings: change-of-mind returns are excluded for hygiene, but faulty items are always covered under the ACL. That's already in the Shipping page.
 - Never add photos showing a child's face. Hands, wrists and necklines only.

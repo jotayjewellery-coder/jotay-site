@@ -221,7 +221,7 @@
     })
     .catch(function () {
       targets.forEach(function (el) {
-        el.innerHTML = '<p class="note">Sorry, the shop didn\'t load. Please refresh, or email us at <a href="mailto:hello@jotay.com.au">hello@jotay.com.au</a>.</p>';
+        el.innerHTML = '<p class="note">Sorry, the shop didn\'t load. Please refresh, or email us at <a href="mailto:jotayjewellery@gmail.com">jotayjewellery@gmail.com</a>.</p>';
       });
     });
 })();
