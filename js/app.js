@@ -13,7 +13,6 @@
   if (y) y.textContent = new Date().getFullYear();
 
   var targets = document.querySelectorAll("[data-render]");
-  if (!targets.length) return;
 
   var PREVIEW = /[?&]preview=1/.test(location.search);
   function esc(s) {
@@ -23,7 +22,7 @@
   }
   function money(n) { return "A$" + (Number.isInteger(n) ? n : n.toFixed(2)); }
   function isLive(link) { return /^https:\/\/(buy\.stripe\.com|checkout\.stripe\.com)\//.test(link || ""); }
-  function productUrl(id) { return "product.html?id=" + encodeURIComponent(id); }
+  function productUrl(id) { return "/p/" + encodeURIComponent(id) + ".html"; }
   function stockText(n) {
     if (n <= 0) return '<span class="stock low">Sold out</span>';
     return "";
@@ -50,11 +49,8 @@
     return '<article class="card" data-cat="' + esc(p.category) + '">' +
       '<div class="img"><a href="' + href + '">' + picture(p, eager) + "</a>" + badge + "</div>" +
       '<div class="body"><h3><a href="' + href + '">' + esc(p.name) + "</a></h3>" +
-      '<p class="finish">' + esc(p.finish) + " · stainless steel</p>" +
-      '<p class="desc">' + esc(p.description) + "</p>" +
-      '<p class="details">' + esc(p.details) + "</p>" +
       '<div class="row"><span class="price">' + money(p.price) + "</span>" + stockText(p.stock) + "</div>" +
-      buyBtn(p, p.stock) + "</div></article>";
+      '<a class="btn btn-ghost" href="' + href + '">View<span class="sr-only"> ' + esc(p.name) + "</span></a></div></article>";
   }
   function bundleCard(b, byId) {
     var items = b.items.map(function (id) { return byId[id]; }).filter(Boolean);
@@ -65,10 +61,9 @@
     return '<article class="card bundle">' +
       '<div class="img"><a href="' + href + '">' + picture(b) + "</a>" + badge + "</div>" +
       '<div class="body"><h3><a href="' + href + '">' + esc(b.name) + "</a></h3>" +
-      '<p class="desc">' + esc(b.description) + "</p>" +
       '<ul class="bundle-items">' + items.map(function (i) { return "<li>" + esc(i.name) + "</li>"; }).join("") + "</ul>" +
       '<div class="row"><span class="price">' + money(b.price) + (worth > b.price ? " <s>" + money(worth) + "</s>" : "") + "</span>" + stockText(stock) + "</div>" +
-      buyBtn(b, stock) + "</div></article>";
+      '<a class="btn btn-ghost" href="' + href + '">View<span class="sr-only"> ' + esc(b.name) + "</span></a></div></article>";
   }
   function setMeta(title, desc, url, image) {
     document.title = title;
@@ -156,6 +151,9 @@
       '<p class="ship-note">Free Australia-wide shipping with Australia Post.</p>' +
       "</div></div>";
   }
+
+  document.querySelectorAll(".gallery").forEach(function (g) { mountGallery(g); });
+  if (!targets.length) return;
 
   fetch("data/products.json", { cache: "no-cache" })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
