@@ -25,9 +25,7 @@
   function isLive(link) { return /^https:\/\/(buy\.stripe\.com|checkout\.stripe\.com)\//.test(link || ""); }
   function stockText(n) {
     if (n <= 0) return '<span class="stock low">Sold out</span>';
-    if (n === 1) return '<span class="stock low">Last one!</span>';
-    if (n <= 3) return '<span class="stock low">Only ' + n + " left</span>";
-    return '<span class="stock">' + n + " in stock</span>";
+    return "";
   }
   function buyBtn(item, stock) {
     if (stock <= 0) return '<span class="btn btn-primary" aria-disabled="true">Sold out</span>';
@@ -42,7 +40,7 @@
       '" alt="' + esc(item.alt || item.name) + '" width="800" height="800"' + (eager ? "" : ' loading="lazy"') + ' decoding="async"></picture>';
   }
   function productCard(p, eager) {
-    var badge = p.stock <= 0 ? '<span class="badge out">Sold out</span>' : p.pick ? '<span class="badge">Jodie\'s pick</span>' : "";
+    var badge = p.stock <= 0 ? '<span class="badge out">Sold out</span>' : "";
     return '<article class="card" data-cat="' + esc(p.category) + '">' +
       '<div class="img">' + picture(p, eager) + badge + "</div>" +
       '<div class="body"><h3>' + esc(p.name) + "</h3>" +
