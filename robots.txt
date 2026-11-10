@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /thanks.html
+Sitemap: https://jotay.com.au/sitemap.xml
