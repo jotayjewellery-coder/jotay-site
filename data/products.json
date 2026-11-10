@@ -33,7 +33,7 @@
       "image": "img/products/little-pearl-drop.webp",
       "imageFallback": "img/products/little-pearl-drop.jpg",
       "pick": false,
-      "stripeLink": "STRIPE_LINK_LITTLE_PEARL_DROP",
+      "stripeLink": "https://buy.stripe.com/test_fZu00k1BNdAxatJ93V9ws00",
       "alt": "Little Pearl Drop: gold-tone stainless steel necklace"
     },
     {
@@ -49,7 +49,7 @@
       "image": "img/products/toggle-heart.webp",
       "imageFallback": "img/products/toggle-heart.jpg",
       "pick": true,
-      "stripeLink": "STRIPE_LINK_TOGGLE_HEART",
+      "stripeLink": "https://buy.stripe.com/test_4gMdRa3JVbspgS7eof9ws01",
       "alt": "Toggle Heart: gold-tone stainless steel necklace"
     },
     {
@@ -65,7 +65,7 @@
       "image": "img/products/forever-loop.webp",
       "imageFallback": "img/products/forever-loop.jpg",
       "pick": true,
-      "stripeLink": "STRIPE_LINK_FOREVER_LOOP",
+      "stripeLink": "https://buy.stripe.com/test_aFa14o4NZdAxfO3dkb9ws02",
       "alt": "Forever Loop: gold-tone stainless steel necklace"
     },
     {
@@ -81,7 +81,7 @@
       "image": "img/products/big-love-heart.webp",
       "imageFallback": "img/products/big-love-heart.jpg",
       "pick": false,
-      "stripeLink": "STRIPE_LINK_BIG_LOVE_HEART",
+      "stripeLink": "https://buy.stripe.com/test_fZu4gAa8j541gS7cg79ws03",
       "alt": "Big Love Heart: gold-tone stainless steel necklace"
     },
     {
@@ -97,7 +97,7 @@
       "image": "img/products/island-flower-chain.webp",
       "imageFallback": "img/products/island-flower-chain.jpg",
       "pick": false,
-      "stripeLink": "STRIPE_LINK_ISLAND_FLOWER_CHAIN",
+      "stripeLink": "https://buy.stripe.com/test_00w7sMgwHcwtdFVeof9ws04",
       "alt": "Island Flower Chain: gold-tone with white flowers stainless steel necklace"
     },
     {
@@ -113,7 +113,7 @@
       "image": "img/products/two-hearts.webp",
       "imageFallback": "img/products/two-hearts.jpg",
       "pick": true,
-      "stripeLink": "STRIPE_LINK_TWO_HEARTS",
+      "stripeLink": "https://buy.stripe.com/test_cNi8wQ0xJdAx59p6VN9ws05",
       "alt": "Two Hearts: gold-tone stainless steel necklace"
     },
     {
@@ -129,7 +129,7 @@
       "image": "img/products/starlight-solitaire.webp",
       "imageFallback": "img/products/starlight-solitaire.jpg",
       "pick": false,
-      "stripeLink": "STRIPE_LINK_STARLIGHT_SOLITAIRE",
+      "stripeLink": "https://buy.stripe.com/test_7sYaEYcgrdAx1Xd0xp9ws06",
       "alt": "Starlight Solitaire: silver-tone stainless steel necklace"
     },
     {
@@ -145,7 +145,7 @@
       "image": "img/products/raindrop-sparkle.webp",
       "imageFallback": "img/products/raindrop-sparkle.jpg",
       "pick": false,
-      "stripeLink": "STRIPE_LINK_RAINDROP_SPARKLE",
+      "stripeLink": "https://buy.stripe.com/test_5kQ8wQeozcwt0T9eof9ws07",
       "alt": "Raindrop Sparkle: gold-tone stainless steel necklace"
     },
     {
@@ -161,7 +161,7 @@
       "image": "img/products/sparkle-heart.webp",
       "imageFallback": "img/products/sparkle-heart.jpg",
       "pick": false,
-      "stripeLink": "STRIPE_LINK_SPARKLE_HEART",
+      "stripeLink": "https://buy.stripe.com/test_7sYdRacgr6851Xd4NF9ws08",
       "alt": "Sparkle Heart: gold-tone stainless steel necklace"
     },
     {
@@ -177,7 +177,7 @@
       "image": "img/products/pink-lemonade-drop.webp",
       "imageFallback": "img/products/pink-lemonade-drop.jpg",
       "pick": true,
-      "stripeLink": "STRIPE_LINK_PINK_LEMONADE_DROP",
+      "stripeLink": "https://buy.stripe.com/test_8x24gAbcn8gdcBR1Bt9ws09",
       "alt": "Pink Lemonade Drop: gold-tone with pink stone stainless steel necklace"
     },
     {
@@ -193,7 +193,7 @@
       "image": "img/products/lucky-eye.webp",
       "imageFallback": "img/products/lucky-eye.jpg",
       "pick": false,
-      "stripeLink": "STRIPE_LINK_LUCKY_EYE",
+      "stripeLink": "https://buy.stripe.com/test_7sY14oa8j5416dt6VN9ws0a",
       "alt": "Lucky Eye: gold-tone stainless steel bracelet"
     },
     {
@@ -209,7 +209,7 @@
       "image": "img/products/big-chunk-chain.webp",
       "imageFallback": "img/products/big-chunk-chain.jpg",
       "pick": false,
-      "stripeLink": "STRIPE_LINK_BIG_CHUNK_CHAIN",
+      "stripeLink": "https://buy.stripe.com/test_dRm14oeoz2VT8lBgwn9ws0b",
       "alt": "Big Chunk Chain: gold-tone stainless steel bracelet"
     },
     {
@@ -225,7 +225,7 @@
       "image": "img/products/sparkle-tennis.webp",
       "imageFallback": "img/products/sparkle-tennis.jpg",
       "pick": true,
-      "stripeLink": "STRIPE_LINK_SPARKLE_TENNIS",
+      "stripeLink": "https://buy.stripe.com/test_cNi7sM80bbsp6dtcg79ws0c",
       "alt": "Sparkle Tennis: gold-tone stainless steel bracelet"
     },
     {
@@ -241,7 +241,7 @@
       "image": "img/products/double-trouble.webp",
       "imageFallback": "img/products/double-trouble.jpg",
       "pick": false,
-      "stripeLink": "STRIPE_LINK_DOUBLE_TROUBLE",
+      "stripeLink": "https://buy.stripe.com/test_dRmdRa6W7eEBfO3a7Z9ws0d",
       "alt": "Double Trouble: gold-tone stainless steel bracelet"
     },
     {
@@ -257,7 +257,7 @@
       "image": "img/products/heart-charm-bracelet.webp",
       "imageFallback": "img/products/heart-charm-bracelet.jpg",
       "pick": false,
-      "stripeLink": "STRIPE_LINK_HEART_CHARM_BRACELET",
+      "stripeLink": "https://buy.stripe.com/test_aFabJ2a8j541eJZeof9ws0e",
       "alt": "Heart Charm Bracelet: silver-tone stainless steel bracelet"
     },
     {
@@ -273,7 +273,7 @@
       "image": "img/products/daisy-days.webp",
       "imageFallback": "img/products/daisy-days.jpg",
       "pick": true,
-      "stripeLink": "STRIPE_LINK_DAISY_DAYS",
+      "stripeLink": "https://buy.stripe.com/test_4gM7sMeoz9kh31hbc39ws0f",
       "alt": "Daisy Days: gold-tone with pink enamel stainless steel bracelet"
     },
     {
@@ -289,7 +289,7 @@
       "image": "img/products/sparkle-huggies.webp",
       "imageFallback": "img/products/sparkle-huggies.jpg",
       "pick": true,
-      "stripeLink": "STRIPE_LINK_SPARKLE_HUGGIES",
+      "stripeLink": "https://buy.stripe.com/test_cNi9AUfsD7c90T9dkb9ws0g",
       "alt": "Sparkle Huggies: gold-tone stainless steel earrings"
     },
     {
@@ -305,7 +305,7 @@
       "image": "img/products/rainbow-drops.webp",
       "imageFallback": "img/products/rainbow-drops.jpg",
       "pick": false,
-      "stripeLink": "STRIPE_LINK_RAINBOW_DROPS",
+      "stripeLink": "https://buy.stripe.com/test_3cIeVe4NZ541atJ7ZR9ws0h",
       "alt": "Rainbow Drops: gold-tone with rainbow stones stainless steel earrings"
     },
     {
@@ -321,7 +321,7 @@
       "image": "img/products/everyday-sparkle-studs.webp",
       "imageFallback": "img/products/everyday-sparkle-studs.jpg",
       "pick": false,
-      "stripeLink": "STRIPE_LINK_EVERYDAY_SPARKLE_STUDS",
+      "stripeLink": "https://buy.stripe.com/test_5kQeVea8j6851Xd4NF9ws0i",
       "alt": "Everyday Sparkle Studs: silver-tone stainless steel earrings"
     },
     {
@@ -337,7 +337,7 @@
       "image": "img/products/little-love-studs.webp",
       "imageFallback": "img/products/little-love-studs.jpg",
       "pick": true,
-      "stripeLink": "STRIPE_LINK_LITTLE_LOVE_STUDS",
+      "stripeLink": "https://buy.stripe.com/test_bJe5kEdkv685atJdkb9ws0j",
       "alt": "Little Love Studs: gold-tone stainless steel earrings"
     },
     {
@@ -353,7 +353,7 @@
       "image": "img/products/beach-day-anklet.webp",
       "imageFallback": "img/products/beach-day-anklet.jpg",
       "pick": false,
-      "stripeLink": "STRIPE_LINK_BEACH_DAY_ANKLET",
+      "stripeLink": "https://buy.stripe.com/test_bJe00keoz2VT45l0xp9ws0k",
       "alt": "Beach Day Anklet: gold-tone stainless steel anklet"
     }
   ],
@@ -370,7 +370,7 @@
       "description": "Two heart necklaces, one for mum and one for her. Wear them together, swim in them together.",
       "image": "img/products/two-hearts.webp",
       "imageFallback": "img/products/two-hearts.jpg",
-      "stripeLink": "STRIPE_LINK_MUM_AND_ME_HEARTS",
+      "stripeLink": "https://buy.stripe.com/test_7sYcN60xJbsp7hx0xp9ws0l",
       "alt": "Mum & Me Hearts gift bundle"
     },
     {
@@ -386,7 +386,7 @@
       "description": "Three bracelets that stack just right: a tennis bracelet, the Lucky Eye and Double Trouble.",
       "image": "img/products/sparkle-tennis.webp",
       "imageFallback": "img/products/sparkle-tennis.jpg",
-      "stripeLink": "STRIPE_LINK_SPARKLE_STACK",
+      "stripeLink": "https://buy.stripe.com/test_fZu4gAfsD3ZX0T9eof9ws0m",
       "alt": "Sparkle Stack of 3 gift bundle"
     },
     {
@@ -402,7 +402,7 @@
       "description": "Three pairs for a full ear stack: huggies, heart studs and Rainbow Drops.",
       "image": "img/products/sparkle-huggies.webp",
       "imageFallback": "img/products/sparkle-huggies.jpg",
-      "stripeLink": "STRIPE_LINK_EARRING_STACK",
+      "stripeLink": "https://buy.stripe.com/test_fZu9AUgwH7c959pbc39ws0n",
       "alt": "Earring Stack of 3 gift bundle"
     },
     {
@@ -417,7 +417,7 @@
       "description": "The Pink Lemonade Drop necklace plus Little Love Studs. A gift that's sorted.",
       "image": "img/products/pink-lemonade-drop.webp",
       "imageFallback": "img/products/pink-lemonade-drop.jpg",
-      "stripeLink": "STRIPE_LINK_PINK_POP_SET",
+      "stripeLink": "https://buy.stripe.com/test_cNi6oI0xJ68545l2Fx9ws0o",
       "alt": "Pink Pop Gift Set gift bundle"
     }
   ]
