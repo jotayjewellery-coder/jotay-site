@@ -5,7 +5,8 @@ Plain HTML, CSS and a little JavaScript, with no build step and no framework. Op
 ```
 index.html  shop.html  bundles.html  waterproof.html  about.html
 shipping.html  contact.html  thanks.html (Stripe "after payment" page)  404.html
-data/products.json   ← ALL prices, stock, names and Stripe links live here
+data/products.json   ← ALL prices, stock, names, photos and Stripe links live here
+product.html  ← product and bundle pages (gallery + buy button), opened as product.html?id=...
 css/style.css  js/app.js  img/  fonts/  favicon.ico  sitemap.xml  robots.txt
 deploy/        ← cloud-init.yaml, deploy.sh, DEPLOY.md (DigitalOcean Droplet)
 tools/build_pages.py  ← optional: regenerates the HTML pages (shared header/footer)
@@ -24,6 +25,7 @@ Opening the .html files by double-click won't load the products, because browser
 Everything is in `data/products.json`:
 - `price` is in A$. `stock` is the number left: **0 shows "Sold out"** on the card and disables the buy button. In-stock items do not show a count.
 - `pick: true` includes a piece in the Favourites section on the home page (no badge).
+- `gallery` is the photo list on the product page (close-ups first, then worn shots). The first photo is the shop-card image.
 - Bundles list the pieces inside them (`items`). Bundle stock is worked out automatically as the lowest stock of its pieces, so **when a bundle sells, lower the stock of each piece in it by 1**.
 - After editing, run `./deploy/deploy.sh <droplet-ip>` to update the live site.
 - Keep Stripe in sync too: use "Limit the number of payments" on each link (below), so Stripe stops selling when stock runs out even if the website hasn't been updated yet.
