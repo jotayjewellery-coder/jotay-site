@@ -62,7 +62,12 @@ Test first in **Test mode** (toggle top right) with card `4242 4242 4242 4242`, 
 ## Things that must be true before going live
 - The Waterproof? page says **every style is tested by us** in the shower, pool and salt water. Do that test before launch, or change the wording.
 - About page: Jodie should read it and make it her own words. her daughter is never named, only "my daughter".
-- Replace `INSTAGRAM_URL` in `tools/build_pages.py` and run `python3 tools/build_pages.py`.
+- Instagram is https://www.instagram.com/jotay_jewellery/ (@jotay_jewellery).
 - Set up `jotayjewellery@gmail.com`, or change it in `tools/build_pages.py` (and the fallback message in `js/app.js`).
 - Earrings: change-of-mind returns are excluded for hygiene, but faulty items are always covered under the ACL. That's already in the Shipping page.
 - Never add photos showing a child's face. Hands, wrists and necklines only.
+
+## SEO
+- `python3 tools/seo.py` rewrites every page's title, description, canonical, Open Graph/Twitter tags and JSON-LD (Product on product pages, Organization with Instagram on the home page), plus `sitemap.xml` and `robots.txt`. Page titles and descriptions for the main pages are at the top of that file.
+- **Run it after any change to `data/products.json`** (price, stock, name) so Google sees the right price and in-stock status.
+- `bag.html`, `thanks.html` and `404.html` are noindex and left out of the sitemap.
