@@ -1,0 +1,14 @@
+# DigitalOcean Functions project, deployed as the "api" component of the jotay-site app.
+# Reachable on the website at /api/cart/checkout. Secrets are encrypted app env vars.
+packages:
+  - name: cart
+    functions:
+      - name: checkout
+        runtime: nodejs:18
+        web: true
+        limits:
+          timeout: 15000
+          memory: 256
+        environment:
+          STRIPE_SECRET_KEY: "${STRIPE_SECRET_KEY}"
+          SITE_URL: "${SITE_URL}"
