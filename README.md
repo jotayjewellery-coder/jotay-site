@@ -30,6 +30,14 @@ Everything is in `data/products.json`:
 - After editing, run `./deploy/deploy.sh <droplet-ip>` to update the live site.
 - Keep Stripe in sync too: use "Limit the number of payments" on each link (below), so Stripe stops selling when stock runs out even if the website hasn't been updated yet.
 
+## Bag (cart) and one-checkout payments
+- Every product and bundle page has **Buy now** (its own Stripe Payment Link) and **Add to bag**. The bag lives in the shopper's browser (localStorage `jotay-bag`); `bag.html` shows it.
+- **Checkout** on the bag page calls `/api/cart/checkout`, a DigitalOcean Function in `api/` (component `api` of the same App Platform app). It only accepts the JoTay prices listed in `api/packages/cart/checkout/index.js`, checks stock in `data/products.json` (bundles count against their pieces), and opens one Stripe Checkout with free Australia Post shipping, AU addresses only.
+- Each item's live Stripe price id is `stripePrice` in `data/products.json`. **New product:** add its `stripePrice` there and add the same price id (plus its test-mode id) to `PRICES` in the function.
+- The Stripe key is an encrypted app env var `STRIPE_SECRET_KEY` (never in the repo). Bag orders show in Stripe with metadata `source: jotay-bag` and an `items` list.
+- After paying, Stripe sends shoppers to `thanks.html?from=bag`, which empties the bag.
+- Stock: lower `stock` in `data/products.json` after each sale. The bag checkout reads it live, so it won't sell more than the number shown.
+
 ## Stripe Payment Links (one per product and bundle)
 Each item's `stripeLink` is a placeholder like `STRIPE_LINK_SPARKLE_TENNIS`. Until a real `https://buy.stripe.com/...` link is pasted in, the button shows "Coming soon" and can't be clicked.
 

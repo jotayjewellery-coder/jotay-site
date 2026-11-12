@@ -21,6 +21,41 @@
     });
   }
   function money(n) { return "A$" + (Number.isInteger(n) ? n : n.toFixed(2)); }
+  /* ---- bag (stored in this browser only) ---- */
+  var BAG_KEY = "jotay-bag";
+  function bagRead() {
+    try {
+      var b = JSON.parse(localStorage.getItem(BAG_KEY) || "{}");
+      return b && typeof b === "object" && !Array.isArray(b) ? b : {};
+    } catch (e) { return {}; }
+  }
+  function bagWrite(b) {
+    try { localStorage.setItem(BAG_KEY, JSON.stringify(b)); } catch (e) { /* private mode */ }
+    bagBadge();
+  }
+  function bagCount(b) {
+    b = b || bagRead();
+    return Object.keys(b).reduce(function (n, k) { return n + (parseInt(b[k], 10) || 0); }, 0);
+  }
+  function bagBadge() {
+    var n = bagCount();
+    document.querySelectorAll(".bag-count").forEach(function (el) { el.textContent = n; el.hidden = n === 0; });
+    document.querySelectorAll(".bag-link").forEach(function (el) { el.setAttribute("aria-label", "Your bag, " + n + (n === 1 ? " item" : " items")); });
+  }
+  (function addBagLink() {
+    var wrap = document.querySelector(".site-header .wrap");
+    if (!wrap || wrap.querySelector(".bag-link")) return;
+    var a = document.createElement("a");
+    a.className = "bag-link";
+    a.href = "/bag.html";
+    a.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M7 7V6a5 5 0 0 1 10 0v1h2.2a1 1 0 0 1 1 .9l1.2 13a1 1 0 0 1-1 1.1H3.6a1 1 0 0 1-1-1.1l1.2-13a1 1 0 0 1 1-.9H7zm2 0h6V6a3 3 0 0 0-6 0v1zm-2 3a1 1 0 1 0 2 0 1 1 0 0 0-2 0zm8 0a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/></svg><span class="bag-word">Bag</span><span class="bag-count" hidden>0</span>';
+    var toggle = wrap.querySelector(".nav-toggle");
+    wrap.insertBefore(a, toggle || null);
+    bagBadge();
+  })();
+  window.addEventListener("storage", function (e) { if (e.key === BAG_KEY) bagBadge(); });
+  if (/[?&]from=bag(&|$)/.test(location.search)) bagWrite({});
+
   function isLive(link) { return /^https:\/\/(buy\.stripe\.com|checkout\.stripe\.com)\//.test(link || ""); }
   function productUrl(id) { return "/p/" + encodeURIComponent(id) + ".html"; }
   function stockText(n) {
@@ -152,20 +187,151 @@
       "</div></div>";
   }
 
-  document.querySelectorAll(".gallery").forEach(function (g) { mountGallery(g); });
-  if (!targets.length) return;
+  function itemStock(item, byId) {
+    if (item.items) {
+      var ps = item.items.map(function (id) { return byId[id]; }).filter(Boolean);
+      return ps.length ? Math.min.apply(null, ps.map(function (i) { return i.stock; })) : 0;
+    }
+    return item.stock;
+  }
+  function addBagButton(root, item, byId) {
+    var info = root.querySelector(".product-info");
+    if (!info || info.querySelector(".add-bag") || !item.stripePrice) return;
+    var stock = itemStock(item, byId);
+    if (stock <= 0) return;
+    var buy = info.querySelector(".btn-primary");
+    var box = document.createElement("div");
+    box.className = "buy-row";
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn btn-sky add-bag";
+    btn.innerHTML = "Add to bag<span class=\"sr-only\"> " + esc(item.name) + "</span>";
+    var msg = document.createElement("p");
+    msg.className = "bag-msg";
+    msg.setAttribute("role", "status");
+    btn.addEventListener("click", function () {
+      var b = bagRead();
+      var q = (parseInt(b[item.id], 10) || 0);
+      if (q >= stock) {
+        msg.innerHTML = "You've got all " + stock + " we have in your bag. <a href=\"/bag.html\">View bag</a>";
+        return;
+      }
+      b[item.id] = q + 1;
+      bagWrite(b);
+      msg.innerHTML = "Added to your bag \uD83D\uDC97 <a href=\"/bag.html\">View bag &amp; checkout</a>";
+    });
+    if (buy && buy.parentNode === info) {
+      info.insertBefore(box, buy);
+      box.appendChild(buy);
+    } else {
+      info.appendChild(box);
+    }
+    box.appendChild(btn);
+    box.insertAdjacentElement("afterend", msg);
+  }
+  function bagPageHtml(lines, total) {
+    if (!lines.length) {
+      return '<div class="bag-empty"><p>Your bag is empty.</p><p><a class="btn btn-primary" href="/shop.html">Shop jewellery</a> <a class="btn btn-ghost" href="/bundles.html">Gift bundles</a></p></div>';
+    }
+    return '<ul class="bag-lines">' + lines.map(function (l) {
+      var it = l.item;
+      return '<li class="bag-line" data-id="' + esc(it.id) + '">' +
+        '<a class="bag-img" href="' + productUrl(it.id) + '"><img src="/' + esc(it.imageFallback || it.image) + '" alt="" width="80" height="80" loading="lazy"></a>' +
+        '<div class="bag-info"><a class="bag-name" href="' + productUrl(it.id) + '">' + esc(it.name) + '</a>' +
+        '<span class="bag-each">' + money(it.price) + ' each</span>' +
+        (l.note ? '<span class="stock low">' + esc(l.note) + "</span>" : "") + "</div>" +
+        '<div class="qty" role="group" aria-label="Quantity of ' + esc(it.name) + '">' +
+        '<button type="button" data-act="dec" aria-label="One less ' + esc(it.name) + '">\u2212</button>' +
+        '<span aria-live="polite">' + l.qty + "</span>" +
+        '<button type="button" data-act="inc" aria-label="One more ' + esc(it.name) + '"' + (l.qty >= l.stock ? " disabled" : "") + ">+</button></div>" +
+        '<span class="bag-sub">' + money(it.price * l.qty) + "</span>" +
+        '<button type="button" class="bag-remove" data-act="remove">Remove<span class="sr-only"> ' + esc(it.name) + "</span></button>" +
+        "</li>";
+    }).join("") + "</ul>" +
+      '<div class="bag-total"><div class="row"><span>Shipping</span><span>Free, Australia Post</span></div>' +
+      '<div class="row total"><span>Total</span><span class="price">' + money(total) + " AUD</span></div>" +
+      '<button type="button" class="btn btn-primary bag-checkout">Checkout</button>' +
+      '<p class="bag-error" role="alert"></p>' +
+      '<p class="small-note">You\'ll pay securely with Stripe. All your pieces come in one parcel.</p></div>';
+  }
+  function mountBag(el, byId, bundleById) {
+    function render() {
+      var b = bagRead(), clean = {}, lines = [], total = 0;
+      Object.keys(b).forEach(function (id) {
+        var it = byId[id] || bundleById[id];
+        var q = parseInt(b[id], 10) || 0;
+        if (!it || !it.stripePrice || q < 1) return;
+        var stock = itemStock(it, byId);
+        if (stock <= 0) return;
+        var note = "";
+        if (q > stock) { q = stock; note = "Only " + stock + " left, so we've changed the quantity"; }
+        clean[id] = q;
+        lines.push({ item: it, qty: q, stock: stock, note: note });
+        total += it.price * q;
+      });
+      if (JSON.stringify(clean) !== JSON.stringify(b)) bagWrite(clean);
+      el.innerHTML = bagPageHtml(lines, total);
+    }
+    el.addEventListener("click", function (e) {
+      var btn = e.target.closest("button");
+      if (!btn) return;
+      if (btn.classList.contains("bag-checkout")) return checkout(btn);
+      var line = btn.closest(".bag-line");
+      if (!line) return;
+      var id = line.getAttribute("data-id"), b = bagRead(), act = btn.getAttribute("data-act");
+      var q = parseInt(b[id], 10) || 0;
+      if (act === "inc") b[id] = q + 1;
+      else if (act === "dec") b[id] = q - 1;
+      if (act === "remove" || b[id] < 1) delete b[id];
+      bagWrite(b);
+      render();
+      var again = el.querySelector('.bag-line[data-id="' + id + '"] [data-act="' + act + '"]');
+      if (again && !again.disabled) again.focus();
+    });
+    function checkout(btn) {
+      var b = bagRead(), err = el.querySelector(".bag-error");
+      var items = Object.keys(b).map(function (id) {
+        var it = byId[id] || bundleById[id];
+        return { price: it.stripePrice, quantity: b[id] };
+      });
+      btn.disabled = true;
+      btn.textContent = "Opening secure checkout\u2026";
+      err.textContent = "";
+      fetch("/api/cart/checkout", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ items: items }) })
+        .then(function (r) { return r.json().catch(function () { return {}; }); })
+        .then(function (d) {
+          if (d && d.url && /^https:\/\/checkout\.stripe\.com\//.test(d.url)) { location.href = d.url; return; }
+          throw new Error((d && d.error) || "Sorry, checkout didn't open. Please try again.");
+        })
+        .catch(function (e) {
+          err.textContent = e.message && !/fetch|network/i.test(e.message) ? e.message : "Sorry, checkout didn't open. Please try again.";
+          btn.disabled = false;
+          btn.textContent = "Checkout";
+        });
+    }
+    render();
+    window.addEventListener("storage", function (e) { if (e.key === BAG_KEY) render(); });
+    window.addEventListener("pageshow", function (e) { if (e.persisted) render(); });
+  }
 
-  fetch("data/products.json", { cache: "no-cache" })
+  document.querySelectorAll(".gallery").forEach(function (g) { mountGallery(g); });
+  var pageId = (location.pathname.match(/\/p\/([a-z0-9-]+)\.html$/) || [])[1] || "";
+  if (!targets.length && !pageId) return;
+
+  fetch("/data/products.json", { cache: "no-cache" })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (data) {
       var byId = {};
       data.products.forEach(function (p) { byId[p.id] = p; });
       var bundleById = {};
       data.bundles.forEach(function (b) { bundleById[b.id] = b; });
+      if (pageId && (byId[pageId] || bundleById[pageId])) addBagButton(document, byId[pageId] || bundleById[pageId], byId);
       targets.forEach(function (el) {
         var kind = el.getAttribute("data-render");
         var limit = parseInt(el.getAttribute("data-limit") || "0", 10);
-        if (kind === "picks") {
+        if (kind === "bag") {
+          mountBag(el, byId, bundleById);
+        } else if (kind === "picks") {
           var picks = data.products.filter(function (p) { return p.pick && p.stock > 0; });
           if (limit) picks = picks.slice(0, limit);
           el.innerHTML = picks.map(function (p, i) { return productCard(p, i < 2); }).join("");
@@ -207,10 +373,12 @@
           if (prod) {
             el.innerHTML = productPageHtml(prod);
             mountGallery(el);
+            addBagButton(el, prod, byId);
             setMeta(prod.name + " | JoTay", (prod.description || prod.name) + " Free Australia-wide shipping.", "https://jotay.com.au/" + productUrl(prod.id), "https://jotay.com.au/" + (prod.imageFallback || prod.image));
           } else if (bun) {
             el.innerHTML = bundlePageHtml(bun, byId);
             mountGallery(el);
+            addBagButton(el, bun, byId);
             setMeta(bun.name + " | JoTay", (bun.description || bun.name) + " Free Australia-wide shipping.", "https://jotay.com.au/" + productUrl(bun.id), "https://jotay.com.au/" + (bun.imageFallback || bun.image));
           } else {
             el.innerHTML = '<p class="crumb"><a href="shop.html">\u2190 Shop</a></p><h1>We couldn\'t find that piece</h1><p>It may have been sold or the link is out of date.</p><p><a class="btn btn-primary" href="shop.html">Back to the shop</a></p>';
